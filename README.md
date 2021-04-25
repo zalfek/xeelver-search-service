@@ -1,3 +1,3 @@
 # search-service
 
-Search api for Xeelver 
+Search service API for Xeelver 
