@@ -1,2 +1,13 @@
+amadeusBaseUrl: http://test.api.amadeus.com
+amadeusAuthenticationUrl: https://test.api.amadeus.com:443/v1/security/oauth2/token
+amadeusApiKey: ${AMADEUS_API_KEY:placeholder}
+amadeusApiSecret: ${AMADEUS_API_SECRET:placeholder}
+
+
 server:
   port: 80
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
