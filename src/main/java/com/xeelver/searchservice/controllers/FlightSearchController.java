@@ -1,6 +1,6 @@
-package com.example.searchservice.controllers;
+package com.xeelver.searchservice.controllers;
 
-import com.example.searchservice.services.FlightSearchService;
+import com.xeelver.searchservice.services.FlightSearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -26,12 +26,14 @@ public class FlightSearchController {
     }
 
     @PostMapping(value = "/api/v1/search/flights", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> searchFlight(@RequestBody Map<String,String> requestParams) throws JsonProcessingException {
+    public @ResponseBody
+    ResponseEntity<Object> searchFlight(@RequestBody Map<String, String> requestParams) throws JsonProcessingException {
         return new ResponseEntity<Object>(objectMapper.readValue(flightSearchService.searchFlight(requestParams), Object.class), HttpStatus.OK);
     }
 
     @GetMapping(value = "/api/v1/search/flights/inspiration", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Object> getInpiration(@RequestParam Map<String,String> requestParams) throws JsonProcessingException {
+    public @ResponseBody
+    ResponseEntity<Object> getInpiration(@RequestParam Map<String, String> requestParams) throws JsonProcessingException {
         return new ResponseEntity<Object>(objectMapper.readValue(flightSearchService.getInpiration(requestParams), Object.class), HttpStatus.OK);
     }
 }

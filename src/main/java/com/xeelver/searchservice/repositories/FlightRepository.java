@@ -1,10 +1,9 @@
-package com.example.searchservice.repositories;
+package com.xeelver.searchservice.repositories;
 
 import com.amadeus.Amadeus;
 import com.amadeus.Params;
 import com.amadeus.resources.FlightDestination;
 import lombok.SneakyThrows;
-
 import org.springframework.beans.factory.annotation.Value;
 import com.amadeus.resources.FlightOfferSearch;
 import org.springframework.stereotype.Repository;

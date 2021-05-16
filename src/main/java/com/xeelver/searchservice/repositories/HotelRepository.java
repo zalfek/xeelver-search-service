@@ -1,4 +1,4 @@
-package com.example.searchservice.repositories;
+package com.xeelver.searchservice.repositories;
 
 import com.amadeus.Amadeus;
 import com.amadeus.Params;
@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 @Repository
 public class HotelRepository {
 
-    private final static Logger LOGGER = Logger.getLogger(FlightRepository.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(HotelRepository.class.getName());
 
     @Value("${amadeusApiKey}")
     private String amadeusApiKey;
