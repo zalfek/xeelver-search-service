@@ -22,12 +22,21 @@ public class FlightSearchService {
 
     public String searchFlight(Map<String, String> flightSearchQuery) {
         String response;
-        FlightQueryCacheObject cachedValue = flightCacheRepository.getValue(flightSearchQuery.toString());
+        FlightQueryCacheObject cachedValue = null;
+        try {
+            cachedValue = flightCacheRepository.getValue(flightSearchQuery.toString());
+        } catch (Exception exception) {
+            LOGGER.warning("Request to cache failed. Exception: " + exception);
+        }
         if (cachedValue == null) {
             LOGGER.info("Nothing found in cache. Request is forwarded to FlightRepository");
             response = this.getData(flightRepository.findFlights(flightSearchQuery));
-            flightCacheRepository.putValue(flightSearchQuery.toString(), new FlightQueryCacheObject(flightSearchQuery.toString(), response));
-            flightCacheRepository.setExpire(flightSearchQuery.toString(), 20, TimeUnit.SECONDS);
+            try {
+                flightCacheRepository.putValue(flightSearchQuery.toString(), new FlightQueryCacheObject(flightSearchQuery.toString(), response));
+                flightCacheRepository.setExpire(flightSearchQuery.toString(), 120, TimeUnit.SECONDS);
+            } catch (Exception exception) {
+                LOGGER.warning("Request to cache failed. Exception: " + exception);
+            }
         } else {
             LOGGER.info("Information is found in cache.");
             response = cachedValue.getPayload();
@@ -37,12 +46,22 @@ public class FlightSearchService {
 
     public String getInpiration(Map<String, String> flightSearchQuery) {
         String response;
-        FlightQueryCacheObject cachedValue = flightCacheRepository.getValue(flightSearchQuery.toString());
+        FlightQueryCacheObject cachedValue = null;
+        try {
+            cachedValue = flightCacheRepository.getValue(flightSearchQuery.toString());
+        } catch (Exception exception) {
+            LOGGER.warning("Request to cache failed. Exception: " + exception);
+        }
+
         if (cachedValue == null) {
             LOGGER.info("Nothing found in cache. Request is forwarded to FlightRepository");
             response = this.getData(flightRepository.getInpiration(flightSearchQuery));
-            flightCacheRepository.putValue(flightSearchQuery.toString(), new FlightQueryCacheObject(flightSearchQuery.toString(), response));
-            flightCacheRepository.setExpire(flightSearchQuery.toString(), 20, TimeUnit.SECONDS);
+            try {
+                flightCacheRepository.putValue(flightSearchQuery.toString(), new FlightQueryCacheObject(flightSearchQuery.toString(), response));
+                flightCacheRepository.setExpire(flightSearchQuery.toString(), 120, TimeUnit.SECONDS);
+            } catch (Exception exception) {
+                LOGGER.warning("Request to cache failed. Exception: " + exception);
+            }
         } else {
             LOGGER.info("Information is found in cache.");
             response = cachedValue.getPayload();
@@ -52,6 +71,12 @@ public class FlightSearchService {
 
 
     protected String getData(Resource[] array) {
-        return array == null ? null : array[0].getResponse().getData().toString();
+        String response = "";
+        try {
+            response = array == null ? null : array[0].getResponse().getBody();
+        } catch (Exception exception) {
+            LOGGER.warning("FlightRepository returned an empty array. Exception: " + exception);
+        }
+        return response;
     }
 }
