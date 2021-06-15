@@ -49,4 +49,28 @@ public class FlightSearchController {
             return new ResponseEntity<Object>(objectMapper.readValue(response, Object.class), HttpStatus.OK);
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:3000", methods = RequestMethod.GET)
+    @GetMapping(value = "/api/v1/search/flights/airline", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Object> getAirlineName(@RequestParam Map<String, String> airline){
+        String response = flightSearchService.getAirlineName(airline);
+        if (response==null || response.isEmpty()) {
+            throw new NotFoundException();
+        } else {
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000", methods = RequestMethod.GET)
+    @GetMapping(value = "/api/v1/search/flights/airports", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Object> getLocations(@RequestParam Map<String, String> keyword){
+        String response = flightSearchService.getLocations(keyword);
+        if (response==null || response.isEmpty()) {
+            throw new NotFoundException();
+        } else {
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        }
+    }
+
+
 }
