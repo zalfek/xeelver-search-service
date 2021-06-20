@@ -3,12 +3,12 @@ package com.xeelver.searchservice.repositories;
 import com.amadeus.Amadeus;
 import com.amadeus.Params;
 import com.amadeus.referenceData.Locations;
-import com.amadeus.resources.Airline;
-import com.amadeus.resources.FlightDestination;
-import com.amadeus.resources.Location;
+import com.amadeus.resources.*;
+import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
-import com.amadeus.resources.FlightOfferSearch;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 
 
 @Repository
+@AllArgsConstructor
+@NoArgsConstructor
 public class FlightRepository {
 
     private final static Logger LOGGER = Logger.getLogger(FlightRepository.class.getName());
@@ -74,4 +76,9 @@ public class FlightRepository {
         return amadeus.referenceData.locations.get(requestParams);
     }
 
+    @SneakyThrows
+    public FlightPrice getFlightPrice(JsonObject flightOffer) {
+        return amadeus.shopping.flightOffersSearch.pricing.post(flightOffer);
+
+    }
 }

@@ -13,4 +13,8 @@ logging:
     root: INFO
     org.springframework.web: INFO
 
+spring:
+  mvc:
+    converters:
+      preferred-json-mapper: gson
 

@@ -4,6 +4,8 @@ import com.amadeus.Amadeus;
 import com.amadeus.Params;
 import com.amadeus.resources.HotelOffer;
 import com.amadeus.resources.HotelOffer.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,8 @@ import java.util.logging.Logger;
 
 
 @Repository
+@AllArgsConstructor
+@NoArgsConstructor
 public class HotelRepository {
 
     private final static Logger LOGGER = Logger.getLogger(HotelRepository.class.getName());

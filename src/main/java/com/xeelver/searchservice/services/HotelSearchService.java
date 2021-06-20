@@ -62,7 +62,7 @@ public class HotelSearchService {
     protected String getData(Resource[] array) {
         String response = "";
         try {
-            response = array == null ? null : array[0].getResponse().getBody();
+            response = array == null ? null : String.valueOf(array[0].getResponse().getResult());
         } catch (Exception exception) {
             LOGGER.warning("FlightRepository returned an empty array. Exception: " + exception);
         }

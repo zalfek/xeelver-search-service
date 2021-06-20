@@ -1,6 +1,10 @@
 package com.xeelver.searchservice.services;
 
+import com.amadeus.Response;
+import com.amadeus.resources.FlightPrice;
 import com.amadeus.resources.Resource;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.xeelver.searchservice.CacheObjects.FlightQueryCacheObject;
 import com.xeelver.searchservice.repositories.FlightRepository;
 import com.xeelver.searchservice.repositories.RedisRepository;
@@ -20,8 +24,8 @@ public class FlightSearchService {
     private final FlightRepository flightRepository;
     private final RedisRepository<FlightQueryCacheObject> flightCacheRepository;
 
-    public String searchFlight(Map<String, String> flightSearchQuery) {
-        String response;
+    public JsonObject searchFlight(Map<String, String> flightSearchQuery) {
+        JsonObject response;
         FlightQueryCacheObject cachedValue = null;
         try {
             cachedValue = flightCacheRepository.getValue(flightSearchQuery.toString());
@@ -44,8 +48,8 @@ public class FlightSearchService {
         return response;
     }
 
-    public String getInpiration(Map<String, String> flightSearchQuery) {
-        String response;
+    public JsonObject getInpiration(Map<String, String> flightSearchQuery) {
+        JsonObject response;
         FlightQueryCacheObject cachedValue = null;
         try {
             cachedValue = flightCacheRepository.getValue(flightSearchQuery.toString());
@@ -69,8 +73,8 @@ public class FlightSearchService {
         return response;
     }
 
-    public String getAirlineName(Map<String, String> airline) {
-        String response;
+    public JsonObject getAirlineName(Map<String, String> airline) {
+        JsonObject response;
         FlightQueryCacheObject cachedValue = null;
         try {
             cachedValue = flightCacheRepository.getValue(airline.toString());
@@ -94,8 +98,8 @@ public class FlightSearchService {
     }
 
 
-    public String getLocations(Map<String, String> keyword) {
-        String response;
+    public JsonObject getLocations(Map<String, String> keyword) {
+        JsonObject response;
         FlightQueryCacheObject cachedValue = null;
         try {
             cachedValue = flightCacheRepository.getValue(keyword.toString());
@@ -118,13 +122,28 @@ public class FlightSearchService {
         return response;
     }
 
-    protected String getData(Resource[] array) {
-        String response = "";
+
+    public JsonObject getFlightPrice(JsonObject flightOffer) {
+        JsonObject template = new JsonObject();
+            JsonObject data = new JsonObject();
+        JsonArray flightOffers = new JsonArray();
+        flightOffers.add(flightOffer);
+        data.addProperty("type", "flight-offers-pricing" );
+        data.add("flightOffers", flightOffers);
+        template.add("data", data);
+        return flightRepository.getFlightPrice(template).getResponse().getResult();
+    }
+
+
+    protected JsonObject getData(Resource[] array) {
+        JsonObject response = null;
         try {
-            response = array == null ? null : String.valueOf(array[0].getResponse().getResult());
+            response = array == null ? null : array[0].getResponse().getResult();
         } catch (Exception exception) {
             LOGGER.warning("FlightRepository returned an empty array. Exception: " + exception);
         }
         return response;
     }
+
+
 }
