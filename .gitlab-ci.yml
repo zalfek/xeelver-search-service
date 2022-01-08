@@ -1,0 +1,33 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+
+stages:
+  - test
+  - build
+  - deploy
+
+maven-test:
+  image: maven:3-jdk-11
+  stage: test
+  script: "mvn test"
+
+
+maven-build:
+  image: maven:3-jdk-11
+  stage: build
+  script: "mvn clean install"
+
+
+docker-build:
+  only:
+    - tags
+    - staging
+  stage: deploy
+  script:
+    - docker build -t marmiss/search-service:${CI_COMMIT_TAG}
+    - docker push marmiss/search-service:${CI_COMMIT_TAG}
