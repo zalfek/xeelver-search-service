@@ -1,6 +1,6 @@
 package com.xeelver.searchservice.services;
 
-import com.xeelver.searchservice.CacheObjects.FlightQueryCacheObject;
+import com.xeelver.searchservice.cache.FlightQueryCacheObject;
 import com.xeelver.searchservice.repositories.RedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

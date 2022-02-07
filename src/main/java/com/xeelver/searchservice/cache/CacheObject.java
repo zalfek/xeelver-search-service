@@ -1,4 +1,4 @@
-package com.xeelver.searchservice.CacheObjects;
+package com.xeelver.searchservice.cache;
 
 
 import java.io.Serializable;

@@ -4,6 +4,7 @@ import com.xeelver.searchservice.exceptions.NotFoundException;
 import com.xeelver.searchservice.services.HotelSearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xeelver.searchservice.services.HotelService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class HotelSearchController {
 
-    private final HotelSearchService hotelSearchService;
+    private final HotelService hotelSearchService;
     private final ObjectMapper objectMapper;
 
     @CrossOrigin(origins = "http://localhost:3000", methods = RequestMethod.GET)

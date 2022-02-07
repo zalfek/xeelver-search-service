@@ -8,10 +8,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class FlightRepositoryTest {
+class AmadeusFlightRepositoryTest {
 
     @Autowired
-    private FlightRepository flightRepository;
+    private AmadeusFlightRepository flightRepository;
 
 
     @Test

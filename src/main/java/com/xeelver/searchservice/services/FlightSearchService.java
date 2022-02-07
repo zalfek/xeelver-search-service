@@ -1,11 +1,10 @@
 package com.xeelver.searchservice.services;
 
-import com.amadeus.Response;
-import com.amadeus.resources.FlightPrice;
 import com.amadeus.resources.Resource;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.xeelver.searchservice.CacheObjects.FlightQueryCacheObject;
+import com.xeelver.searchservice.cache.FlightQueryCacheObject;
+import com.xeelver.searchservice.repositories.CacheRepository;
 import com.xeelver.searchservice.repositories.FlightRepository;
 import com.xeelver.searchservice.repositories.RedisRepository;
 import lombok.AllArgsConstructor;
@@ -18,11 +17,11 @@ import java.util.logging.Logger;
 
 @Service
 @AllArgsConstructor
-public class FlightSearchService {
+public class FlightSearchService implements FlightService{
 
     private final static Logger LOGGER = Logger.getLogger(FlightSearchService.class.getName());
     private final FlightRepository flightRepository;
-    private final RedisRepository<FlightQueryCacheObject> flightCacheRepository;
+    private final CacheRepository<FlightQueryCacheObject> flightCacheRepository;
 
     public JsonObject searchFlight(Map<String, String> flightSearchQuery) {
         JsonObject response;
@@ -48,7 +47,7 @@ public class FlightSearchService {
         return response;
     }
 
-    public JsonObject getInpiration(Map<String, String> flightSearchQuery) {
+    public JsonObject getInspiration(Map<String, String> flightSearchQuery) {
         JsonObject response;
         FlightQueryCacheObject cachedValue = null;
         try {
@@ -59,7 +58,7 @@ public class FlightSearchService {
 
         if (cachedValue == null) {
             LOGGER.info("Nothing found in cache. Request is forwarded to FlightRepository");
-            response = this.getData(flightRepository.getInpiration(flightSearchQuery));
+            response = this.getData(flightRepository.getInspiration(flightSearchQuery));
             try {
                 flightCacheRepository.putValue(flightSearchQuery.toString(), new FlightQueryCacheObject(flightSearchQuery.toString(), response));
                 flightCacheRepository.setExpire(flightSearchQuery.toString(), 120, TimeUnit.SECONDS);
@@ -135,7 +134,7 @@ public class FlightSearchService {
     }
 
 
-    protected JsonObject getData(Resource[] array) {
+    private JsonObject getData(Resource[] array) {
         JsonObject response = null;
         try {
             response = array == null ? null : array[0].getResponse().getResult();

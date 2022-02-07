@@ -1,4 +1,4 @@
-package com.xeelver.searchservice.CacheObjects;
+package com.xeelver.searchservice.cache;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
