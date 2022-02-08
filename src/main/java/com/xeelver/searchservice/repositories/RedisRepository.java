@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class RedisRepository<T> {
+public class RedisRepository<T> implements CacheRepository<T> {
     private RedisTemplate<String, T> redisTemplate;
     private ValueOperations<String, T> valueOperations;
     private ListOperations<String, T> listOperations;
@@ -25,7 +25,7 @@ public class RedisRepository<T> {
         this.hashOperations = redisTemplate.opsForHash();
     }
 
-    //region String
+
     public void putValue(String key, T value) {
         valueOperations.set(key, value);
     }
@@ -37,10 +37,10 @@ public class RedisRepository<T> {
     public void setExpire(String key, long timeout, TimeUnit unit) {
         redisTemplate.expire(key, timeout, unit);
     }
-    //endregion
 
 
-    //region List
+
+
     public void addList(String key, T value) {
         listOperations.leftPush(key, value);
     }
@@ -52,10 +52,10 @@ public class RedisRepository<T> {
     public Long getListSize(String key) {
         return listOperations.size(key);
     }
-    //endregion
 
 
-    //region Set
+
+
     public void addToSet(String key, T... values) {
         setOperations.add(key, values);
     }
@@ -63,10 +63,10 @@ public class RedisRepository<T> {
     public Set<T> getSetMembers(String key) {
         return setOperations.members(key);
     }
-    //endregion
 
 
-    //region Hash
+
+
     public void saveHash(String key, Integer id, T value) {
         hashOperations.put(key, id, value);
     }
@@ -78,5 +78,5 @@ public class RedisRepository<T> {
     public void deleteHash(String key, int id) {
         hashOperations.delete(key, id);
     }
-    //endregion
+
 }

@@ -1,8 +1,8 @@
 amadeusBaseUrl: http://test.api.amadeus.com
 amadeusAuthenticationUrl: https://test.api.amadeus.com:443/v1/security/oauth2/token
-amadeusApiKey: ${AMADEUS_API_KEY:Sy6SmGaxkTPgN6e1omulC6pIJroa2r7v}
-amadeusApiSecret: ${AMADEUS_API_SECRET:I4EgLbzbjqAVU1Pb}
-redisPassword: ${REDIS_PASSWORD:passwordPlaceholder}
+amadeusApiKey: ${AMADEUS_API_KEY:placeholder}
+amadeusApiSecret: ${AMADEUS_API_SECRET:placeholder}
+redisPassword: ${REDIS_PASSWORD:placeholder}
 redisHost: redis.xeelver.svc.cluster.local
 redisPort: 6379
 server:

@@ -1,11 +1,10 @@
 package com.xeelver.searchservice.controllers;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.xeelver.searchservice.exceptions.NotFoundException;
 import com.xeelver.searchservice.services.FlightSearchService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xeelver.searchservice.services.FlightService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +18,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class FlightSearchController {
 
-    private final FlightSearchService flightSearchService;
+    private final FlightService flightSearchService;
     private final ObjectMapper objectMapper;
 
     @CrossOrigin(origins = "http://localhost:3000", methods = RequestMethod.GET)
@@ -44,7 +43,7 @@ public class FlightSearchController {
     @GetMapping(value = "/api/v1/search/flights/inspiration", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Object> getInpiration(@RequestParam Map<String, String> requestParams) {
-        JsonObject response = flightSearchService.getInpiration(requestParams);
+        JsonObject response = flightSearchService.getInspiration(requestParams);
         if (response == null) {
             throw new NotFoundException();
         } else {
